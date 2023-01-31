@@ -1,0 +1,9 @@
+---
+import { env } from '$server/constants';
+
+const message = env.MAINTENANCE_MODE_MESSAGE;
+
+Astro.response.status = 503;
+---
+
+<h1>{message}</h1>

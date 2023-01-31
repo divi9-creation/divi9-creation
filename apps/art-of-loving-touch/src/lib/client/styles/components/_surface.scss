@@ -1,0 +1,51 @@
+@layer components {
+  .surface {
+    @apply bg-white;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .surface {
+      @apply bg-gray-900;
+    }
+
+    .surface-1 {
+      background-image: linear-gradient(
+        180deg,
+        hsl(0 0% 100% / 0.04),
+        hsl(0 0% 100% / 0.04)
+      );
+    }
+
+    .surface-2 {
+      background-image: linear-gradient(
+        180deg,
+        hsl(0 0% 100% / 0.08),
+        hsl(0 0% 100% / 0.08)
+      );
+    }
+
+    .surface-3 {
+      background-image: linear-gradient(
+        180deg,
+        hsl(0 0% 100% / 0.12),
+        hsl(0 0% 100% / 0.12)
+      );
+    }
+
+    .surface-4 {
+      background-image: linear-gradient(
+        180deg,
+        hsl(0 0% 100% / 0.16),
+        hsl(0 0% 100% / 0.16)
+      );
+    }
+
+    .surface-5 {
+      background-image: linear-gradient(
+        180deg,
+        hsl(0 0% 100% / 0.2),
+        hsl(0 0% 100% / 0.2)
+      );
+    }
+  }
+}

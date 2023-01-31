@@ -1,0 +1,16 @@
+---
+interface Props {
+  class?: string;
+  fluid?: boolean;
+}
+
+const { class: className, fluid = false } = Astro.props;
+
+const spacing = fluid ? 'px-0' : 'px-4';
+---
+
+<div class={`py-10 ${className} ${spacing}`}>
+  <slot />
+</div>
+
+<style lang='scss'></style>

@@ -1,0 +1,1 @@
+export { fetchJSON } from './fetch';

@@ -1,0 +1,11 @@
+---
+interface Props {
+  class?: string; // rem
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<main class={`py-16 ${className}`}>
+  <slot />
+</main>

@@ -1,0 +1,29 @@
+---
+import { Container } from '../container';
+import { Navigation } from '../navigation';
+
+interface Props {
+  activePath: string;
+}
+
+const { activePath } = Astro.props;
+
+const menuItems = [
+  { text: 'Home', url: '/' },
+  { text: 'Services', url: '/services' },
+  { text: 'Gallery', url: '/gallery' },
+  { text: 'About', url: '/about' },
+  { text: 'Contact', url: '/contact' },
+];
+
+const cta = {
+  text: 'Book Now',
+  url: 'https://demo.as.me',
+};
+---
+
+<div class='surface surface-1'>
+  <Container size='lg'>
+    <Navigation {activePath} {cta} {menuItems} client:load />
+  </Container>
+</div>

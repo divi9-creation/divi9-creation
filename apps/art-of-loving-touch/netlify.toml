@@ -1,0 +1,7 @@
+[build.environment]
+  NODE_VERSION = "16"
+  NETLIFY_USE_PNPM = "true"
+[build]
+  base = "apps/art-of-loving-touch"
+  publish = "./dist"
+  command = "cd ../.. && pnpm turbo run build --filter=art-of-loving-touch" 

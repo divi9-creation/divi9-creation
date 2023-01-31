@@ -1,0 +1,44 @@
+---
+import { Main } from '$client/components';
+import '$client/styles/global.scss';
+import { Analytics } from '$client/features/analytics';
+
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const year = new Date().getFullYear();
+const copyrightText = 'Divi9 Creation LLC';
+---
+
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <title>{title}</title>
+    <Analytics client:load />
+  </head>
+  <body>
+    <div class='flex flex-col h-screen'>
+      <div class='grow'>
+        <Main>
+          <slot />
+        </Main>
+      </div>
+      <footer>
+        <div class='py-5'>
+          <div class='flex justify-center items-center'>
+            <p class='text-sm text-muted dark:text-muted'>
+              &copy; {year}
+              {copyrightText}
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
