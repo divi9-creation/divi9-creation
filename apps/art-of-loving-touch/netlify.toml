@@ -4,4 +4,4 @@
 [build]
   base = "apps/art-of-loving-touch"
   publish = "./dist"
-  command = "cd ../.. && npx turbo run build --filter=art-of-loving-touch" 
+  command = "cd ../.. && pnpm turbo run build --filter=art-of-loving-touch" 
