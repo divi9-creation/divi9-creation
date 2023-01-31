@@ -6,9 +6,7 @@ import tailwind from '@astrojs/tailwind';
 import mkcert from 'vite-plugin-mkcert';
 
 // https://astro.build/config
-import vercel from '@astrojs/vercel/serverless';
-
-// https://astro.build/config
+import netlify from '@astrojs/netlify/functions';
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,7 +19,7 @@ export default defineConfig({
     }),
   ],
   output: 'server',
-  adapter: vercel(),
+  adapter: netlify(),
   vite: {
     plugins: [mkcert()],
     server: {
