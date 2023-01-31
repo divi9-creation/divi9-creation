@@ -9,21 +9,21 @@ import mkcert from 'vite-plugin-mkcert';
 import netlify from '@astrojs/netlify/functions';
 
 // https://astro.build/config
+import vercel from "@astrojs/vercel/serverless";
+
+// https://astro.build/config
 export default defineConfig({
-  integrations: [
-    svelte(),
-    tailwind({
-      config: {
-        applyBaseStyles: false,
-      },
-    }),
-  ],
+  integrations: [svelte(), tailwind({
+    config: {
+      applyBaseStyles: false
+    }
+  })],
   output: 'server',
-  adapter: netlify(),
+  adapter: vercel(),
   vite: {
     plugins: [mkcert()],
     server: {
-      https: true,
-    },
-  },
+      https: true
+    }
+  }
 });
