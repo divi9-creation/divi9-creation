@@ -6,7 +6,7 @@ import tailwind from '@astrojs/tailwind';
 import mkcert from 'vite-plugin-mkcert';
 
 // https://astro.build/config
-import vercel from '@astrojs/vercel/edge';
+import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
