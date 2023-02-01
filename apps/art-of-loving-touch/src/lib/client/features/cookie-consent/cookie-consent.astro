@@ -1,0 +1,13 @@
+---
+import { config } from '$client/constants';
+---
+
+{
+  config.PUBLIC_COOKIE_YES_ENABLED && (
+    <script
+      id='cookieyes'
+      type='text/javascript'
+      src={`https://cdn-cookieyes.com/client_data/${config.PUBLIC_COOKIE_YES_SITE_ID}/script.js`}
+    />
+  )
+}

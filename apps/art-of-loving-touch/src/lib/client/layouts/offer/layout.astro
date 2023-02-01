@@ -5,6 +5,8 @@ import '$client/styles/global.scss';
 import { DatoCMS } from '$server/cms';
 import { either } from 'fp-ts';
 import { Analytics } from '$client/features/analytics';
+import { config } from '$client/constants';
+import { CookieConsent } from '$client/features';
 
 const query = gql`
   query Settings {
@@ -39,17 +41,9 @@ const { settings } = data;
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
-    <!-- Start cookieyes banner -->
-    <script
-      id='cookieyes'
-      type='text/javascript'
-      src='https://cdn-cookieyes.com/client_data/075cdf75164a15aafb0c4736/script.js'
-    ></script>
-    <!-- End cookieyes banner -->
 
-    <!-- Analytics start -->
+    <CookieConsent />
     <Analytics client:load />
-    <!-- Analytics End -->
   </head>
   <body>
     <div class='flex flex-col h-screen'>
