@@ -39,7 +39,17 @@ const { settings } = data;
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
+    <!-- Start cookieyes banner -->
+    <script
+      id='cookieyes'
+      type='text/javascript'
+      src='https://cdn-cookieyes.com/client_data/075cdf75164a15aafb0c4736/script.js'
+    ></script>
+    <!-- End cookieyes banner -->
+
+    <!-- Analytics start -->
     <Analytics client:load />
+    <!-- Analytics End -->
   </head>
   <body>
     <div class='flex flex-col h-screen'>
