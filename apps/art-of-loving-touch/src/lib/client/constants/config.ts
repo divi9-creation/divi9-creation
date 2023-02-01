@@ -2,7 +2,10 @@ import { z } from 'zod';
 
 const publicEnvSchema = z.object({
   DEV: z.boolean({ required_error: 'DEV is required' }),
-  PUBLIC_COOKIE_YES_ENABLED: z.string().transform((val) => val === 'true'),
+  PUBLIC_COOKIE_YES_ENABLED: z
+    .string()
+    .transform((val) => val === 'true')
+    .default('false'),
   PUBLIC_COOKIE_YES_SITE_ID: z.string().optional(),
   PUBLIC_IPINFO_API_KEY: z.string().optional(),
   PUBLIC_META_PIXEL_ID: z
