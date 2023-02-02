@@ -32,11 +32,10 @@ const { title } = Astro.props;
 const year = new Date().getFullYear();
 const { settings } = data;
 
+await FeatureFlags.load();
+
 const showCookieConsent = FeatureFlags.isFeatureEnabled('show_cookie_consent');
 const useAnalytics = FeatureFlags.isFeatureEnabled('use_analytics');
-
-console.log(showCookieConsent);
-console.log(useAnalytics);
 ---
 
 <!DOCTYPE html>

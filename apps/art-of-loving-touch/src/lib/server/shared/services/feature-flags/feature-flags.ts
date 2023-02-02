@@ -18,7 +18,7 @@ type Bin = {
 
 let bin: Bin;
 
-const getBin = async () => {
+export const load = async () => {
   if (bin) {
     return bin;
   }
@@ -34,10 +34,10 @@ const getBin = async () => {
 
   const data = await response.json();
 
-  return data.record as Bin;
+  return (bin = data.record as Bin);
 };
 
-const isFeatureEnabledPartial = (bin: Bin) => (key: string) => {
+export const isFeatureEnabled = (key: string) => {
   const { features } = bin;
   const environment = env.DEV ? 'development' : 'production';
 
@@ -45,7 +45,3 @@ const isFeatureEnabledPartial = (bin: Bin) => (key: string) => {
     .filter((feature) => feature.key === key)
     .some((feature) => feature.environments[environment].enabled);
 };
-
-bin = await getBin();
-
-export const isFeatureEnabled = isFeatureEnabledPartial(bin);
