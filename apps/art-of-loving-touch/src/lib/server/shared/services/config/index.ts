@@ -1,1 +1,3 @@
-export * as Config from './config';
+import { create } from './config';
+
+export const Config = { create };
