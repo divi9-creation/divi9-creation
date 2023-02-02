@@ -32,10 +32,10 @@ const { title } = Astro.props;
 const year = new Date().getFullYear();
 const { settings } = data;
 
-await FeatureFlags.load();
+// await FeatureFlags.load();
 
-const showCookieConsent = FeatureFlags.isFeatureEnabled('show_cookie_consent');
-const useAnalytics = FeatureFlags.isFeatureEnabled('use_analytics');
+// const showCookieConsent = FeatureFlags.isFeatureEnabled('show_cookie_consent');
+// const useAnalytics = FeatureFlags.isFeatureEnabled('use_analytics');
 ---
 
 <!DOCTYPE html>
@@ -47,8 +47,8 @@ const useAnalytics = FeatureFlags.isFeatureEnabled('use_analytics');
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
 
-    {showCookieConsent && <CookieConsent />}
-    {useAnalytics && <Analytics client:load />}
+    <!-- {showCookieConsent && <CookieConsent />}
+    {useAnalytics && <Analytics client:load />} -->
   </head>
   <body>
     <div class='flex flex-col h-screen'>
