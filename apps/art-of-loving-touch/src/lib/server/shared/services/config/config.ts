@@ -18,7 +18,7 @@ type Config = {
 
 let config: Config;
 
-export const load = async () => {
+const load = async () => {
   const response = await fetch(
     `https://api.jsonbin.io/v3/b/${env.JSONBIN_BIN_ID}`,
     {

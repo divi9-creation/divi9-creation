@@ -32,8 +32,6 @@ const { title } = Astro.props;
 const year = new Date().getFullYear();
 const { settings } = data;
 
-await Config.load();
-
 const showCookieConsent = Config.isFeatureEnabled('show_cookie_consent');
 
 const useAnalytics = Config.isFeatureEnabled('use_analytics');
