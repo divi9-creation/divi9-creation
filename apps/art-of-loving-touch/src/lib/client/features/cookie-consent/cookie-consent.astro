@@ -1,9 +1,13 @@
 ---
-import { config } from '$client/constants';
+import { useCookieConsent } from './cookie-consent';
+
+interface Props {
+  siteId: string;
+}
+
+const { siteId } = Astro.props;
+
+const { scriptUrl } = useCookieConsent({ siteId });
 ---
 
-<script
-  id='cookieyes'
-  type='text/javascript'
-  src={`https://cdn-cookieyes.com/client_data/${config.PUBLIC_COOKIEYES_SITE_ID}/script.js`}
-></script>
+<script id='cookieyes' type='text/javascript' src={scriptUrl}></script>

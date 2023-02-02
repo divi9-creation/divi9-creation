@@ -5,7 +5,6 @@ import '$client/styles/global.scss';
 import { DatoCMS } from '$server/cms';
 import { either } from 'fp-ts';
 import { Analytics } from '$client/features/analytics';
-import { CookieConsent } from '$client/features';
 import { Config } from '$server/shared';
 
 const query = gql`
@@ -32,9 +31,8 @@ const { title } = Astro.props;
 const year = new Date().getFullYear();
 const { settings } = data;
 
-const { config, isFeatureEnabled } = await Config.create();
+const { isFeatureEnabled } = await Config.create();
 
-const showCookieConsent = isFeatureEnabled('show_cookie_consent');
 const useAnalytics = isFeatureEnabled('use_analytics');
 ---
 
@@ -47,14 +45,12 @@ const useAnalytics = isFeatureEnabled('use_analytics');
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
 
-    {showCookieConsent && <CookieConsent />}
     {useAnalytics && <Analytics client:load />}
   </head>
   <body>
     <div class='flex flex-col h-screen'>
       <div class='grow'>
         <Main>
-          <pre>{JSON.stringify(config, null, 2)}</pre>
           <slot />
         </Main>
       </div>
