@@ -21,6 +21,8 @@ export const create = async () => {
     `https://api.jsonbin.io/v3/b/${env.JSONBIN_BIN_ID}`,
     {
       headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
         'X-ACCESS-KEY': env.JSONBIN_ACCESS_KEY,
       },
     }
