@@ -31,6 +31,7 @@ export const create = async () => {
   const config = data.record as Config;
 
   return {
+    config,
     isFeatureEnabled: isFeatureEnabledPartial(config),
   };
 };

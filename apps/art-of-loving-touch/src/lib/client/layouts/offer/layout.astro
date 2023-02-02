@@ -32,7 +32,7 @@ const { title } = Astro.props;
 const year = new Date().getFullYear();
 const { settings } = data;
 
-const { isFeatureEnabled } = await Config.create();
+const { config, isFeatureEnabled } = await Config.create();
 
 const showCookieConsent = isFeatureEnabled('show_cookie_consent');
 const useAnalytics = isFeatureEnabled('use_analytics');
@@ -54,6 +54,7 @@ const useAnalytics = isFeatureEnabled('use_analytics');
     <div class='flex flex-col h-screen'>
       <div class='grow'>
         <Main>
+          <pre>{JSON.stringify(config, null, 2)}</pre>
           <slot />
         </Main>
       </div>
