@@ -12,17 +12,11 @@ type Features = {
   environments: FeatureEnvironment;
 };
 
-type Bin = {
+type Config = {
   features: Features[];
 };
 
-let bin: Bin;
-
 export const load = async () => {
-  if (bin) {
-    return bin;
-  }
-
   const response = await fetch(
     `https://api.jsonbin.io/v3/b/${env.JSONBIN_BIN_ID}`,
     {
@@ -34,13 +28,13 @@ export const load = async () => {
 
   const data = await response.json();
 
-  return (bin = data.record as Bin);
+  return data.record;
 };
 
-export const isFeatureEnabled = (key: string) => {
+export const isFeatureEnabled = (config: Config, key: string) => {
   console.log(key);
   console.log('is feature enabled');
-  const { features } = bin;
+  const { features } = config;
   const environment = env.DEV ? 'development' : 'production';
 
   return features

@@ -1,2 +1,2 @@
 export * from './cache';
-export * from './feature-flags';
+export * from './config';

@@ -6,7 +6,7 @@ import { DatoCMS } from '$server/cms';
 import { either } from 'fp-ts';
 import { Analytics } from '$client/features/analytics';
 import { CookieConsent } from '$client/features';
-import { FeatureFlags } from '$server/shared';
+import { Config } from '$server/shared';
 
 const query = gql`
   query Settings {
@@ -32,9 +32,12 @@ const { title } = Astro.props;
 const year = new Date().getFullYear();
 const { settings } = data;
 
-await FeatureFlags.load();
+const config = await Config.load();
 
-const showCookieConsent = FeatureFlags.isFeatureEnabled('show_cookie_consent');
+const showCookieConsent = Config.isFeatureEnabled(
+  config,
+  'show_cookie_consent'
+);
 // const useAnalytics = FeatureFlags.isFeatureEnabled('use_analytics');
 ---
 
