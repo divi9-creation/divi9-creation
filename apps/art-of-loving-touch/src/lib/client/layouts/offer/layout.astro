@@ -34,7 +34,7 @@ const { settings } = data;
 
 await FeatureFlags.load();
 
-// const showCookieConsent = FeatureFlags.isFeatureEnabled('show_cookie_consent');
+const showCookieConsent = FeatureFlags.isFeatureEnabled('show_cookie_consent');
 // const useAnalytics = FeatureFlags.isFeatureEnabled('use_analytics');
 ---
 
