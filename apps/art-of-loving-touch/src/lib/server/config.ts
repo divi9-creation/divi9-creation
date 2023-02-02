@@ -48,4 +48,6 @@ let envSchema = z.object({
     .min(1, 'UPSTASH_API_URL is required'),
 });
 
-export const env = envSchema.parse(import.meta.env);
+const env = envSchema.parse(import.meta.env);
+
+export { env };

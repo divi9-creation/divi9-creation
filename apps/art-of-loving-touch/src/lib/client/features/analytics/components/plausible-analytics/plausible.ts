@@ -1,8 +1,7 @@
 import { config } from '$client/constants';
-import { Env } from '$shared/utils';
 import { onMount } from 'svelte';
 
-const SCRIPT_URL = Env.isProd()
+const SCRIPT_URL = config.DEV
   ? 'https://plausible.io/js/script.js'
   : 'https://plausible.io/js/script.local.manual.js';
 

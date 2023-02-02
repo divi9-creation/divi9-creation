@@ -1,5 +1,5 @@
 import { env } from '$server/config';
-import { Env } from '$shared/utils';
+import { Env } from '$server/shared/utils';
 import { taskEither } from 'fp-ts';
 import { pipe } from 'fp-ts/lib/function';
 import { GraphQLClient } from 'graphql-request';
