@@ -11,9 +11,12 @@ let envSchema = z.object({
     .string({ required_error: 'DATOCMS_API_URL is required' })
     .min(1, 'DATOCMS_API_URL is required'),
   DEV: z.boolean({ required_error: 'DEV is required' }),
-  FLAGSMITH_ENVIRONMENT_KEY: z
-    .string({ required_error: 'FLAGSMITH_ENVIRONMENT_KEY is required' })
-    .min(1, 'FLAGSMITH_ENVIRONMENT_KEY is required'),
+  JSONBIN_ACCESS_KEY: z
+    .string({ required_error: 'JSONBIN_ACCESS_KEY is required' })
+    .min(1, 'JSONBIN_ACCESS_KEY is required'),
+  JSONBIN_BIN_ID: z
+    .string({ required_error: 'JSONBIN_BIN_ID is required' })
+    .min(1, 'JSONBIN_BIN_ID is required'),
   MAILERLITE_API_KEY: z
     .string({ required_error: 'MAILERLITE_API_KEY is required' })
     .min(1, 'MAILERLITE_API_KEY is required'),

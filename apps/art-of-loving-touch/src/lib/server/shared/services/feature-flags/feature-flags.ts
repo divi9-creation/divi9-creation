@@ -1,27 +1,51 @@
 import { env } from '$server/constants';
-import Flagsmith, { Flags } from 'flagsmith-nodejs';
 
-let client: Flagsmith;
+type FeatureEnvironment = Record<
+  'development' | 'production',
+  {
+    enabled: boolean;
+  }
+>;
 
-const getClient = () => {
-  if (client) {
-    return client;
+type Features = {
+  key: string;
+  environments: FeatureEnvironment;
+};
+
+type Bin = {
+  features: Features[];
+};
+
+let bin: Bin;
+
+const getBin = async () => {
+  if (bin) {
+    return bin;
   }
 
-  return (client = new Flagsmith({
-    environmentKey: env.FLAGSMITH_ENVIRONMENT_KEY,
-  }));
+  const response = await fetch(
+    `https://api.jsonbin.io/v3/b/${env.JSONBIN_BIN_ID}`,
+    {
+      headers: {
+        'X-ACCESS-KEY': env.JSONBIN_ACCESS_KEY,
+      },
+    }
+  );
+
+  const data = await response.json();
+
+  return data.record as Bin;
 };
 
-const getFlags = async (client: Flagsmith) => {
-  return await client.getEnvironmentFlags();
+const isFeatureEnabledPartial = (bin: Bin) => (key: string) => {
+  const { features } = bin;
+  const environment = env.DEV ? 'development' : 'production';
+
+  return features
+    .filter((feature) => feature.key === key)
+    .some((feature) => feature.environments[environment].enabled);
 };
 
-const isFeatureEnabledPartial = (flags: Flags) => (key: string) => {
-  return flags.isFeatureEnabled(key);
-};
+bin = await getBin();
 
-client = getClient();
-const flags = await getFlags(client);
-
-export const isFeatureEnabled = isFeatureEnabledPartial(flags);
+export const isFeatureEnabled = isFeatureEnabledPartial(bin);
