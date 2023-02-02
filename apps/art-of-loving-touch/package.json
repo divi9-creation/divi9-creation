@@ -22,6 +22,7 @@
     "canvas-confetti": "^1.6.0",
     "felte": "^1.2.7",
     "fetch": "workspace:*",
+    "flagsmith-nodejs": "^2.5.1",
     "focus-trap": "^7.2.0",
     "fp-ts": "^2.13.1",
     "graphql-request": "^5.1.0",

@@ -5,8 +5,8 @@ import '$client/styles/global.scss';
 import { DatoCMS } from '$server/cms';
 import { either } from 'fp-ts';
 import { Analytics } from '$client/features/analytics';
-import { config } from '$client/constants';
 import { CookieConsent } from '$client/features';
+import { FeatureFlags } from '$server/shared';
 
 const query = gql`
   query Settings {
@@ -31,6 +31,11 @@ export interface Props {
 const { title } = Astro.props;
 const year = new Date().getFullYear();
 const { settings } = data;
+
+const showCookieConsent = FeatureFlags.isFeatureEnabled('show_cookie_consent');
+const useAnalytics = FeatureFlags.isFeatureEnabled('use_analytics');
+
+console.log(useAnalytics);
 ---
 
 <!DOCTYPE html>
@@ -42,8 +47,8 @@ const { settings } = data;
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
 
-    <CookieConsent />
-    <Analytics client:load />
+    {showCookieConsent && <CookieConsent />}
+    {useAnalytics && <Analytics client:load />}
   </head>
   <body>
     <div class='flex flex-col h-screen'>
