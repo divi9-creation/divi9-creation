@@ -34,10 +34,12 @@ const { settings } = data;
 
 const config = await Config.load();
 
-const showCookieConsent = Config.isFeatureEnabled(
-  config,
-  'show_cookie_consent'
-);
+console.log(config);
+
+// const showCookieConsent = Config.isFeatureEnabled(
+//   config,
+//   'show_cookie_consent'
+// );
 // const useAnalytics = FeatureFlags.isFeatureEnabled('use_analytics');
 ---
 
