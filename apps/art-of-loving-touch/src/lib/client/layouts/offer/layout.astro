@@ -37,7 +37,7 @@ const { config, isFeatureEnabled } = await Config.create();
 
 const showCookieConsent = isFeatureEnabled('show_cookie_consent');
 const useAnalytics = isFeatureEnabled('use_analytics');
-console.log(env.DEV);
+console.log('dev', env.DEV);
 ---
 
 <!DOCTYPE html>
