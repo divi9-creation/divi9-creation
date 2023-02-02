@@ -1,4 +1,4 @@
-import { env } from '$server/constants';
+import { env } from '$server/config';
 import { fetchJSON } from 'fetch';
 import { pipe } from 'fp-ts/lib/function';
 

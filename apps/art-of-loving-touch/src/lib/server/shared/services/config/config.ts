@@ -1,7 +1,7 @@
-import { env } from '$server/constants';
+import { env } from '$server/config';
 
 type FeatureEnvironment = Record<
-  'development' | 'production',
+  'development' | 'production' | 'staging',
   {
     enabled: boolean;
   }
@@ -40,9 +40,8 @@ export const create = async () => {
 
 export const isFeatureEnabledPartial = (config: Config) => (key: string) => {
   const { features } = config;
-  const environment = env.DEV ? 'development' : 'production';
 
   return features
     .filter((feature) => feature.key === key)
-    .some((feature) => feature.environments[environment].enabled);
+    .some((feature) => feature.environments[env.MODE].enabled);
 };

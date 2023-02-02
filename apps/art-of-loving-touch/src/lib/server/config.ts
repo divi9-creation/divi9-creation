@@ -26,6 +26,7 @@ let envSchema = z.object({
   MAILERLITE_GROUP_ID: z
     .string({ required_error: 'MAILERLITE_GROUP_ID is required' })
     .min(1, 'MAILERLITE_GROUP_ID is required'),
+  MODE: z.enum(['development', 'production', 'staging']),
   PLAUSIBLE_API_KEY: z
     .string({ required_error: 'PLAUSIBLE_API_KEY is required' })
     .min(1, 'PLAUSIBLE_API_KEY is required'),

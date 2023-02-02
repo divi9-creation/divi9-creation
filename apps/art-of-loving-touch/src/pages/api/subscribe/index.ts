@@ -1,4 +1,4 @@
-import { env } from '$server/constants';
+import { env } from '$server/config';
 import { MailerLite } from '$server/email-marketing';
 import type { APIContext, APIRoute } from 'astro';
 import { either } from 'fp-ts';

@@ -1,4 +1,4 @@
-import { env } from '$server/constants';
+import { env } from '$server/config';
 import { Redis } from '@upstash/redis';
 import { option, taskEither as TE } from 'fp-ts';
 import { pipe } from 'fp-ts/lib/function';
