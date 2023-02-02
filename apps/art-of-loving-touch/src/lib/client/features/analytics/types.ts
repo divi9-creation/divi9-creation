@@ -4,9 +4,9 @@ export namespace AnalyticsTypes {
   export interface Traits {
     address?: {
       city: string;
-      state: string;
-      zipCode: string;
       country: string;
+      postalCode: string;
+      region: string;
     };
     email?: string;
     firstName?: string;

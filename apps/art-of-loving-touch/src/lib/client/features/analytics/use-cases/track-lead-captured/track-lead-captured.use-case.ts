@@ -22,13 +22,26 @@ const mapMetaPixelTraits = (traits: AnalyticsTypes.Traits) => {
         fn: traits.firstName,
         country: traits.address?.country,
         ct: traits.address?.city,
-        st: traits.address?.state,
-        zp: traits.address?.zipCode,
+        st: traits.address?.region,
+        zp: traits.address?.postalCode,
       }
     : {};
 };
 
-const trackMetaEvent = (traits: AnalyticsTypes.Traits) => {
+const trackMetaEvent = (command: TrackLeadCapturedCommand) => {
+  const { email, firstName, geolocation } = command;
+
+  const traits: AnalyticsTypes.Traits = {
+    address: {
+      city: geolocation?.city,
+      country: geolocation?.country,
+      postalCode: geolocation?.postal,
+      region: geolocation?.region,
+    },
+    email,
+    firstName,
+  };
+
   const mappedTraits = mapMetaPixelTraits(traits);
 
   fbq('init', config.PUBLIC_META_PIXEL_ID, mappedTraits);
@@ -77,5 +90,12 @@ const PROVIDERS = [
 ];
 
 export const trackLeadCapturedUseCase = (command: TrackLeadCapturedCommand) => {
-  PROVIDERS.filter((p) => p.enabled).forEach(({ handler }) => handler(command));
+  const mappedCommand = {
+    ...command,
+    email: command.email.toLowerCase().trim(),
+  };
+
+  PROVIDERS.filter((p) => p.enabled).forEach(({ handler }) =>
+    handler(mappedCommand)
+  );
 };
