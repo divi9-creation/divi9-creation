@@ -47,7 +47,7 @@ const useAnalytics = isFeatureEnabled('use_analytics');
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
 
-    <CookieConsent />
+    {showCookieConsent && <CookieConsent />}
     {useAnalytics && <Analytics client:load />}
   </head>
   <body>
