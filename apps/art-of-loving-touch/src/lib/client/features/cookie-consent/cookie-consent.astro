@@ -1,0 +1,13 @@
+---
+import { useCookieConsent } from './cookie-consent';
+
+interface Props {
+  siteId: string;
+}
+
+const { siteId } = Astro.props;
+
+const { scriptUrl } = useCookieConsent({ siteId });
+---
+
+<script id='cookieyes' type='text/javascript' src={scriptUrl}></script>

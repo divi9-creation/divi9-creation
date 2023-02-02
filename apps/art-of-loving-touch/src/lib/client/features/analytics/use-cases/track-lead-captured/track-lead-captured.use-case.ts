@@ -1,5 +1,6 @@
 import { config } from '$client/constants';
 import mixpanel from 'mixpanel-browser';
+import type { AnalyticsTypes } from '../../types';
 
 type TrackLeadCapturedCommand = {
   email: string;
@@ -14,25 +15,37 @@ const META_PIXEL_EVENT_NAME = 'Lead';
 const MIXPANEL_EVENT_NAME = 'lead_captured';
 const PLAUSIBLE_EVENT_NAME = 'Lead Captured';
 
+const mapMetaPixelTraits = (traits: AnalyticsTypes.Traits) => {
+  return traits
+    ? {
+        em: traits.email,
+        fn: traits.firstName,
+        country: traits.address?.country,
+        ct: traits.address?.city,
+        st: traits.address?.region,
+        zp: traits.address?.postalCode,
+      }
+    : {};
+};
+
 const trackMetaEvent = (command: TrackLeadCapturedCommand) => {
-  const email = command.email;
-  const firstName = command.firstName;
-  const geolocation = command.geolocation;
-  const city = geolocation?.city;
-  const country = geolocation?.country;
-  const region = geolocation?.region;
-  const postalCode = geolocation?.postal;
+  const { email, firstName, geolocation } = command;
 
-  fbq('init', config.PUBLIC_META_PIXEL_ID, {
-    em: email,
-    fn: firstName,
-    country,
-    ct: city,
-    st: region,
-    zp: postalCode,
-  });
+  const traits: AnalyticsTypes.Traits = {
+    address: {
+      city: geolocation?.city,
+      country: geolocation?.country,
+      postalCode: geolocation?.postal,
+      region: geolocation?.region,
+    },
+    email,
+    firstName,
+  };
 
-  fbq('track', META_PIXEL_EVENT_NAME);
+  const mappedTraits = mapMetaPixelTraits(traits);
+
+  fbq('init', config.PUBLIC_META_PIXEL_ID, mappedTraits);
+  fbq('track', 'Lead');
 };
 
 const trackMixpanelEvent = (command: TrackLeadCapturedCommand) => {
@@ -77,5 +90,12 @@ const PROVIDERS = [
 ];
 
 export const trackLeadCapturedUseCase = (command: TrackLeadCapturedCommand) => {
-  PROVIDERS.filter((p) => p.enabled).forEach(({ handler }) => handler(command));
+  const mappedCommand = {
+    ...command,
+    email: command.email.toLowerCase().trim(),
+  };
+
+  PROVIDERS.filter((p) => p.enabled).forEach(({ handler }) =>
+    handler(mappedCommand)
+  );
 };

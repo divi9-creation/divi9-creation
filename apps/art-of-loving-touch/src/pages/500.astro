@@ -1,4 +1,14 @@
 ---
+import { Container, Hero, PageTitle } from '$client/components';
+import { BaseLayout } from '$client/layouts';
 ---
 
-<h1>Here</h1>
+<BaseLayout title='Page Not Found'>
+  <Hero>
+    <Container size='md'>
+      <PageTitle>
+        Something went wrong on our end. Please try again later.
+      </PageTitle>
+    </Container>
+  </Hero>
+</BaseLayout>

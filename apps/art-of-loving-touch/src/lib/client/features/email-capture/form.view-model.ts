@@ -94,13 +94,14 @@ export const useEmailCaptureForm = (props: EmailCaptureFormProps) => {
       state.set('loading');
 
       const geolocationResult = await getGeolocationUseCase()();
+
       const geolocation = E.getOrElse(() => ({} as IPInfoGeolocationResponse))(
         geolocationResult
       );
 
       const captureLeadCommand = {
         ...values,
-        ...geolocation,
+        geolocation,
         offer: props.offer,
       };
 

@@ -1,9 +1,16 @@
 ---
-import { env } from '$server/constants';
+import { Container, Hero, PageTitle } from '$client/components';
+import { BaseLayout } from '$client/layouts';
 
-const message = env.MAINTENANCE_MODE_MESSAGE;
+const message = `We're down for maintenance. Be back soon!`;
 
 Astro.response.status = 503;
 ---
 
-<h1>{message}</h1>
+<BaseLayout title='Maintenance'>
+  <Hero>
+    <Container size='md'>
+      <PageTitle>{message}</PageTitle>
+    </Container>
+  </Hero>
+</BaseLayout>

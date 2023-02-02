@@ -1,4 +1,5 @@
-import { env } from '$server/constants';
+import { env } from '$server/config';
+import { Env } from '$server/shared/utils';
 import { taskEither } from 'fp-ts';
 import { pipe } from 'fp-ts/lib/function';
 import { GraphQLClient } from 'graphql-request';
@@ -8,7 +9,7 @@ const DEFAULT_HEADERS: { Authorization: string; 'X-Include-Drafts'?: string } =
     Authorization: env.DATOCMS_API_TOKEN,
   };
 
-if (env.DEV) {
+if (!Env.isProd()) {
   DEFAULT_HEADERS['X-Include-Drafts'] = 'true';
 }
 
