@@ -38,10 +38,9 @@ export const load = async () => {
 };
 
 export const isFeatureEnabled = (key: string) => {
+  console.log(key);
+  console.log('is feature enabled');
   const { features } = bin;
-  console.log(bin);
-  console.log(features);
-  console.log(env.DEV);
   const environment = env.DEV ? 'development' : 'production';
 
   return features
