@@ -16,6 +16,8 @@ type Config = {
   features: Features[];
 };
 
+let config: Config;
+
 export const load = async () => {
   const response = await fetch(
     `https://api.jsonbin.io/v3/b/${env.JSONBIN_BIN_ID}`,
@@ -28,13 +30,10 @@ export const load = async () => {
 
   const data = await response.json();
 
-  console.log('response', response);
-  console.log('data', data);
-
-  return data.record;
+  return (config = data.record as Config);
 };
 
-export const isFeatureEnabled = (config: Config, key: string) => {
+const isFeatureEnabledPartial = (config: Config) => (key: string) => {
   const { features } = config;
   const environment = env.DEV ? 'development' : 'production';
 
@@ -42,3 +41,7 @@ export const isFeatureEnabled = (config: Config, key: string) => {
     .filter((feature) => feature.key === key)
     .some((feature) => feature.environments[environment].enabled);
 };
+
+config = await load();
+
+export const isFeatureEnabled = isFeatureEnabledPartial(config);
