@@ -7,6 +7,7 @@ import { either } from 'fp-ts';
 import { Analytics } from '$client/features/analytics';
 import { CookieConsent } from '$client/features';
 import { Config } from '$server/shared';
+import { env } from '$server/constants';
 
 const query = gql`
   query Settings {
@@ -36,6 +37,8 @@ const { config, isFeatureEnabled } = await Config.create();
 
 const showCookieConsent = isFeatureEnabled('show_cookie_consent');
 const useAnalytics = isFeatureEnabled('use_analytics');
+const isDev = env.DEV;
+console.log('is dev', isDev);
 ---
 
 <!DOCTYPE html>
