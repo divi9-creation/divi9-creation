@@ -45,7 +45,7 @@ const useAnalytics = isFeatureEnabled('use_analytics');
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
 
-    {useAnalytics && <Analytics client:load />}
+    {useAnalytics && <Analytics client:idle />}
   </head>
   <body>
     <div class='flex flex-col h-screen'>
