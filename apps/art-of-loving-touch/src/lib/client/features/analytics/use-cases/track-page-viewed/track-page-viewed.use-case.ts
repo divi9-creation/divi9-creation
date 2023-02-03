@@ -1,9 +1,14 @@
 import { config } from '$client/constants';
 import mixpanel from 'mixpanel-browser';
 
+const GOOGLE_ANALYTICS_EVENT_NAME = 'page_view';
 const META_PIXEL_EVENT_NAME = 'PageView';
 const MIXPANEL_EVENT_NAME = 'page_viewed';
 const PLAUSIBLE_EVENT_NAME = 'pageView';
+
+const trackGoogleAnalyticsEvent = () => {
+  gtag('event', GOOGLE_ANALYTICS_EVENT_NAME);
+};
 
 const trackMetaEvent = () => {
   fbq('track', META_PIXEL_EVENT_NAME);
@@ -19,21 +24,23 @@ const trackPlausibleEvent = () => {
 
 const INTEGRATIONS = [
   {
+    name: 'Google Analytics',
+    enabled: !!config.PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID,
+    handler: trackGoogleAnalyticsEvent,
+  },
+  {
     name: 'Meta Pixel',
     enabled: !!config.PUBLIC_META_PIXEL_ID,
-    event: META_PIXEL_EVENT_NAME,
     handler: trackMetaEvent,
   },
   {
     name: 'Mixpanel',
     enabled: !!config.PUBLIC_MIXPANEL_PROJECT_TOKEN,
-    event: MIXPANEL_EVENT_NAME,
     handler: trackMixpanelEvent,
   },
   {
     name: 'Plausible Analytics',
     enabled: !!config.PUBLIC_PLAUSIBLE_DOMAIN,
-    event: PLAUSIBLE_EVENT_NAME,
     handler: trackPlausibleEvent,
   },
 ];
