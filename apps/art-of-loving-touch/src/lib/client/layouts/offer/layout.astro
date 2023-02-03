@@ -46,11 +46,6 @@ const useAnalytics = isFeatureEnabled('use_analytics');
     <title>{title}</title>
 
     {useAnalytics && <Analytics client:load />}
-    <script
-      src='https://beamanalytics.b-cdn.net/beam.min.js'
-      data-token='1139b4cd-01a0-4f99-864c-8bb6ae1a785b'
-      async
-    ></script>
   </head>
   <body>
     <div class='flex flex-col h-screen'>
