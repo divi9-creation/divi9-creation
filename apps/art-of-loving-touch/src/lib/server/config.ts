@@ -2,6 +2,9 @@ import { z } from 'zod';
 
 let envSchema = z.object({
   ANALYTICS_CACHE_MINUTES: z.coerce.number().min(1).default(5),
+  BASEROW_API_TOKEN: z
+    .string({ required_error: 'BASEROW_API_TOKEN is required' })
+    .min(1, 'BASEROW_API_TOKEN is required'),
   DATOCMS_API_TOKEN: z
     .string({
       required_error: 'DATOCMS_API_TOKEN is required',
@@ -11,12 +14,6 @@ let envSchema = z.object({
     .string({ required_error: 'DATOCMS_API_URL is required' })
     .min(1, 'DATOCMS_API_URL is required'),
   DEV: z.boolean({ required_error: 'DEV is required' }),
-  JSONBIN_ACCESS_KEY: z
-    .string({ required_error: 'JSONBIN_ACCESS_KEY is required' })
-    .min(1, 'JSONBIN_ACCESS_KEY is required'),
-  JSONBIN_BIN_ID: z
-    .string({ required_error: 'JSONBIN_BIN_ID is required' })
-    .min(1, 'JSONBIN_BIN_ID is required'),
   MAILERLITE_API_KEY: z
     .string({ required_error: 'MAILERLITE_API_KEY is required' })
     .min(1, 'MAILERLITE_API_KEY is required'),
