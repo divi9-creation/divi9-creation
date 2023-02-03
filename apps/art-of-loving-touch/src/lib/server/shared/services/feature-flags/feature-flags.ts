@@ -22,7 +22,7 @@ type GetFlagsResponse = {
 
 const requestOptions: RequestInit = {
   headers: {
-    Authorization: `Token xWhXDjk8WZYGr6DFprvmdwDq0obx6vPm`,
+    Authorization: `Token ${env.BASEROW_API_TOKEN}`,
   },
 };
 
