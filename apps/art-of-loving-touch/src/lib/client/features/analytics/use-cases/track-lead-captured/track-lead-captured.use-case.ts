@@ -11,9 +11,12 @@ type TrackLeadCapturedCommand = {
 
 const FORM_TYPE = 'lead_magnet';
 
-const META_PIXEL_EVENT_NAME = 'Lead';
-const MIXPANEL_EVENT_NAME = 'lead_captured';
-const PLAUSIBLE_EVENT_NAME = 'Lead Captured';
+const trackGoogleAnalyticsEvent = (command: TrackLeadCapturedCommand) => {
+  gtag('event', 'generate_lead', {
+    currency: 'USD',
+    value: 0,
+  });
+};
 
 const mapMetaPixelTraits = (traits: AnalyticsTypes.Traits) => {
   return traits
@@ -49,7 +52,7 @@ const trackMetaEvent = (command: TrackLeadCapturedCommand) => {
 };
 
 const trackMixpanelEvent = (command: TrackLeadCapturedCommand) => {
-  mixpanel.track(MIXPANEL_EVENT_NAME, {
+  mixpanel.track('lead_captured', {
     form_type: FORM_TYPE,
     offer_id: command.offer.id,
     offer_name: command.offer.name,
@@ -58,7 +61,7 @@ const trackMixpanelEvent = (command: TrackLeadCapturedCommand) => {
 };
 
 const trackPlausibleEvent = (command: TrackLeadCapturedCommand) => {
-  plausible(PLAUSIBLE_EVENT_NAME, {
+  plausible('Lead Captured', {
     props: {
       form_type: FORM_TYPE,
       offer_id: command.offer.id,
@@ -70,21 +73,23 @@ const trackPlausibleEvent = (command: TrackLeadCapturedCommand) => {
 
 const PROVIDERS = [
   {
+    name: 'Google Analytics',
+    enabled: !!config.PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID,
+    handler: trackGoogleAnalyticsEvent,
+  },
+  {
     name: 'Meta Pixel',
     enabled: !!config.PUBLIC_META_PIXEL_ID,
-    event: META_PIXEL_EVENT_NAME,
     handler: trackMetaEvent,
   },
   {
     name: 'Mixpanel',
     enabled: !!config.PUBLIC_MIXPANEL_PROJECT_TOKEN,
-    event: MIXPANEL_EVENT_NAME,
     handler: trackMixpanelEvent,
   },
   {
     name: 'Plausible Analytics',
     enabled: !!config.PUBLIC_PLAUSIBLE_DOMAIN,
-    event: PLAUSIBLE_EVENT_NAME,
     handler: trackPlausibleEvent,
   },
 ];
