@@ -8,6 +8,7 @@ import confetti from 'canvas-confetti';
 import { trackLeadCapturedUseCase } from '../analytics';
 import { config } from '$client/constants';
 import { fetchJSON } from 'fetch';
+import { mapStateToCode } from '$shared/utils/geolocation';
 
 type IPInfoGeolocationResponse = {
   ip: string;
@@ -19,8 +20,21 @@ type IPInfoGeolocationResponse = {
 
 const getGeolocationUseCase = () => {
   return pipe(
-    fetchJSON(`https://ipinfo.io?token=${config.PUBLIC_IPINFO_API_KEY}`),
-    TE.map((data): IPInfoGeolocationResponse => data)
+    fetchJSON<IPInfoGeolocationResponse>(
+      `https://ipinfo.io?token=${config.PUBLIC_IPINFO_API_KEY}`
+    ),
+    TE.map((data): App.Geolocation => {
+      const { city, country, ip, region, postal } = data;
+      const stateCode = mapStateToCode(region);
+
+      return {
+        city: city,
+        country: country,
+        ip: ip,
+        state: stateCode,
+        zip: postal,
+      };
+    })
   );
 };
 
@@ -30,15 +44,10 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-type SubscribeRequest = {
-  email: string;
-  ip?: string;
-};
-
 type CaptureLeadCommand = {
   email: string;
   firstName?: string;
-  geolocation?: IPInfoGeolocationResponse;
+  geolocation?: App.Geolocation;
   ip?: string;
   offer: { id: string; name: string; type: string; url: string };
 };
@@ -47,7 +56,6 @@ const captureLeadUseCase = (command: CaptureLeadCommand) => {
   const email = command.email.toLowerCase().trim();
   const firstName = command.firstName;
   const geolocation = command.geolocation;
-  const ip = command.geolocation?.ip;
   const offer = command.offer;
 
   return pipe(
@@ -55,7 +63,7 @@ const captureLeadUseCase = (command: CaptureLeadCommand) => {
     TE.bind('response', () => {
       const request: SubscribeRequest = {
         email,
-        ip,
+        geolocation,
       };
 
       return pipe(
@@ -95,11 +103,15 @@ export const useEmailCaptureForm = (props: EmailCaptureFormProps) => {
 
       const geolocationResult = await getGeolocationUseCase()();
 
-      const geolocation = E.getOrElse(() => ({} as IPInfoGeolocationResponse))(
-        geolocationResult
+      const geolocation = pipe(
+        geolocationResult,
+        E.fold(
+          () => undefined,
+          (data) => data
+        )
       );
 
-      const captureLeadCommand = {
+      const captureLeadCommand: CaptureLeadCommand = {
         ...values,
         geolocation,
         offer: props.offer,

@@ -43,6 +43,8 @@ let envSchema = z.object({
   UPSTASH_API_URL: z
     .string({ required_error: 'UPSTASH_API_URL is required' })
     .min(1, 'UPSTASH_API_URL is required'),
+  XATA_API_KEY: z.string({ required_error: 'XATA_API_KEY is required' }),
+  XATA_API_BRANCH: z.enum(['development', 'staging', 'production']),
 });
 
 const env = envSchema.parse(import.meta.env);

@@ -1,17 +1,20 @@
 import { config } from '$client/constants';
+import { featureFlagsStore } from '$client/stores';
+import { isFeatureEnabled } from '$shared/utils/feature-flags';
 import mixpanel from 'mixpanel-browser';
+import { get } from 'svelte/store';
 import type { AnalyticsTypes } from '../../types';
 
 type TrackLeadCapturedCommand = {
   email: string;
   firstName?: string;
-  geolocation: any;
+  geolocation?: App.Geolocation;
   offer: { id: string; name: string; type: string };
 };
 
 const FORM_TYPE = 'lead_magnet';
 
-const trackGoogleAnalyticsEvent = (command: TrackLeadCapturedCommand) => {
+const trackGoogleAnalyticsEvent = () => {
   gtag('event', 'generate_lead', {
     currency: 'USD',
     value: 0,
@@ -35,12 +38,14 @@ const trackMetaEvent = (command: TrackLeadCapturedCommand) => {
   const { email, firstName, geolocation } = command;
 
   const traits: AnalyticsTypes.Traits = {
-    address: {
-      city: geolocation?.city,
-      country: geolocation?.country,
-      postalCode: geolocation?.postal,
-      region: geolocation?.region,
-    },
+    address: geolocation
+      ? {
+          city: geolocation.city,
+          country: geolocation.country,
+          postalCode: geolocation.zip,
+          region: geolocation.state,
+        }
+      : undefined,
     email,
     firstName,
   };
@@ -95,12 +100,16 @@ const PROVIDERS = [
 ];
 
 export const trackLeadCapturedUseCase = (command: TrackLeadCapturedCommand) => {
-  const mappedCommand = {
-    ...command,
-    email: command.email.toLowerCase().trim(),
-  };
+  const featureFlags = get(featureFlagsStore);
 
-  PROVIDERS.filter((p) => p.enabled).forEach(({ handler }) =>
-    handler(mappedCommand)
-  );
+  if (isFeatureEnabled(featureFlags, 'use_analytics')) {
+    const mappedCommand = {
+      ...command,
+      email: command.email.toLowerCase().trim(),
+    };
+
+    PROVIDERS.filter((p) => p.enabled).forEach(({ handler }) =>
+      handler(mappedCommand)
+    );
+  }
 };

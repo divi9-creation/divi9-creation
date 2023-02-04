@@ -1,11 +1,12 @@
 ---
 import { gql } from 'graphql-request';
-import { Main } from '$client/components';
+import { App, Main } from '$client/components';
 import '$client/styles/global.scss';
 import { DatoCMS } from '$server/cms';
 import { either } from 'fp-ts';
 import { Analytics } from '$client/features/analytics';
-import { FeatureFlags } from '$server/shared';
+import { isFeatureEnabled } from '$shared/utils/feature-flags';
+import { listFeatureFlagsUseCase } from '$server/feature-flags';
 
 const query = gql`
   query Settings {
@@ -31,9 +32,15 @@ const { title } = Astro.props;
 const year = new Date().getFullYear();
 const { settings } = data;
 
-const { isFeatureEnabled } = await FeatureFlags.load();
+const featureFlagsResult = await listFeatureFlagsUseCase()();
 
-const useAnalytics = isFeatureEnabled('use_analytics');
+if (either.isLeft(featureFlagsResult)) {
+  throw new Error(`Flags not set`);
+}
+
+const featureFlags = featureFlagsResult.right;
+
+const useAnalytics = isFeatureEnabled(featureFlags, 'use_analytics');
 ---
 
 <!DOCTYPE html>
@@ -45,6 +52,7 @@ const useAnalytics = isFeatureEnabled('use_analytics');
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
 
+    <App {featureFlags} client:load />
     {useAnalytics && <Analytics client:load />}
   </head>
   <body>

@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Divi9-Creation-s04f6f.us-east-1.xata.sh/db/art-of-loving-touch",
+  "codegen": {
+    "output": "src/lib/server/shared/services/xata/xata.codegen.ts"
+  }
+}
