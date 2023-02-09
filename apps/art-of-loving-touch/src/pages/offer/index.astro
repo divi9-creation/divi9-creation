@@ -35,9 +35,10 @@ const timePeriods = {
 };
 
 const timePeriod = timePeriods['7d'];
+const newLeadCount = leadCount * 6;
 
-const socialProofLabel = `${leadCount * 6} ${
-  leadCount > 1 ? 'couples' : 'couple'
+const socialProofLabel = `${newLeadCount} ${
+  newLeadCount > 1 ? 'couples' : 'couple'
 }`;
 
 const socialProofMessage = `downloaded these strategies`;
