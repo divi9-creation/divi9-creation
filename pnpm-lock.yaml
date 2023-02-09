@@ -23,7 +23,7 @@ importers:
       '@types/mixpanel-browser': ^2.38.1
       '@types/scroll-lock': ^2.1.0
       '@upstash/redis': ^1.19.3
-      '@xata.io/client': ^0.22.0
+      '@xata.io/client': ^0.22.1
       astro: ^2.0.4
       canvas-confetti: ^1.6.0
       felte: ^1.2.7
@@ -48,7 +48,7 @@ importers:
       '@felte/validator-zod': 1.0.13_zod@3.20.2
       '@types/canvas-confetti': 1.6.0
       '@upstash/redis': 1.19.3
-      '@xata.io/client': 0.22.0_typescript@4.9.5
+      '@xata.io/client': 0.22.1_typescript@4.9.5
       astro: 2.0.4_sass@1.57.1
       canvas-confetti: 1.6.0
       felte: 1.2.7_svelte@3.55.1
@@ -1271,8 +1271,8 @@ packages:
     resolution: {integrity: sha512-ukOMWnCg1tCvT7WnDfsUKQOFDQGsyR5tNgRpwmqi+5/vzU3ghdDXzvIM4IOPdSb3OeSsBNvmSL8nxIVOqi2WXA==}
     dev: false
 
-  /@xata.io/client/0.22.0_typescript@4.9.5:
-    resolution: {integrity: sha512-pLo0kMu/n6idKCq+75xS8vaHsIDlNxgeam+qZEmagkEHwIB1E1Z4ZrdTD4RceAQ6lr8TUrqFfFfjVr+RYyasaw==}
+  /@xata.io/client/0.22.1_typescript@4.9.5:
+    resolution: {integrity: sha512-i8oMNFOTWSfxHS7f9nfYjdMGCdFzWqtI8/v59OO0VB6QtUk5edxUn3oflF29aUrxaU7mAkIriyqI7hiIns472Q==}
     peerDependencies:
       typescript: '>=4.5'
     dependencies:

@@ -2,6 +2,9 @@
 import { Main } from '$client/components';
 import '$client/styles/global.scss';
 import { Analytics } from '$client/features/analytics';
+import { listFeatureFlagsUseCase } from '$server/feature-flags';
+import { either } from 'fp-ts';
+import { isFeatureEnabled } from '$shared/utils/feature-flags';
 
 export interface Props {
   title: string;
@@ -10,6 +13,16 @@ export interface Props {
 const { title } = Astro.props;
 const year = new Date().getFullYear();
 const copyrightText = 'Divi9 Creation LLC';
+
+const featureFlagsResult = await listFeatureFlagsUseCase()();
+
+if (either.isLeft(featureFlagsResult)) {
+  throw new Error(`Flags not set`);
+}
+
+const featureFlags = featureFlagsResult.right;
+
+const useAnalytics = isFeatureEnabled(featureFlags, 'use_analytics');
 ---
 
 <!DOCTYPE html>
@@ -20,7 +33,7 @@ const copyrightText = 'Divi9 Creation LLC';
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
-    <Analytics client:load />
+    {useAnalytics && <Analytics client:load />}
   </head>
   <body>
     <div class='flex flex-col h-screen'>

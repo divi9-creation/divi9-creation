@@ -1,7 +1,9 @@
 ---
-import { Container, Headline, Hero, Text } from '$client/components';
+import { Container, Headline, Hero, Icon, Text } from '$client/components';
 import { EmailCaptureForm } from '$client/features';
+import { DownloadIcon } from '$client/icons';
 import { OfferLayout } from '$client/layouts';
+import { xata } from '$server/shared';
 
 const headline = 'Build intimacy with your partner';
 const subheading =
@@ -9,7 +11,7 @@ const subheading =
 
 const actionText = 'Give Me The Strategies';
 const privacyStatement =
-  'We care about your privacy. Divi9 Yoni uses the information you provide to contact you about our relevant content, products, and services. You may unsubscribe from these communications at any time. View our Privacy Policy and Terms of Service.';
+  'We care about your privacy. Divi9 Yoni uses the information you provide to contact you with relevant content. You may unsubscribe from these communications at any time.';
 
 const offer = {
   id: '12345678',
@@ -17,6 +19,18 @@ const offer = {
   type: 'guide',
   url: 'https://drive.google.com/file/d/1JQLrzKGElo36De1M21UCQzllPHgE9XKt/view',
 };
+
+const {
+  aggs: { totalCount: leadCount },
+} = await xata.db.leads.aggregate({
+  totalCount: {
+    count: '*',
+  },
+});
+
+const socialProofMessage = `${leadCount * 6} ${
+  leadCount > 1 ? 'couples' : 'couple'
+} downloaded these strategies`;
 ---
 
 <OfferLayout title='Home'>
@@ -28,6 +42,14 @@ const offer = {
             <Headline>{headline}</Headline>
             <Text size='xl'>{subheading}</Text>
           </div>
+          {
+            !!leadCount && (
+              <div class='flex gap-2'>
+                <Icon icon={DownloadIcon} />
+                <Text class='text-info-500'>{socialProofMessage}</Text>
+              </div>
+            )
+          }
           <div class='max-w-md'>
             <EmailCaptureForm
               {actionText}

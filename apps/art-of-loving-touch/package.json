@@ -18,7 +18,7 @@
     "@felte/validator-zod": "^1.0.13",
     "@types/canvas-confetti": "^1.6.0",
     "@upstash/redis": "^1.19.3",
-    "@xata.io/client": "^0.22.0",
+    "@xata.io/client": "^0.22.1",
     "astro": "^2.0.4",
     "canvas-confetti": "^1.6.0",
     "felte": "^1.2.7",
