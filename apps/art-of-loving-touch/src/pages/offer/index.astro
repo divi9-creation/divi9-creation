@@ -28,9 +28,19 @@ const {
   },
 });
 
-const socialProofMessage = `${leadCount * 6} ${
+const timePeriods = {
+  day: '24 hours',
+  '7d': '7 days',
+  '30d': '30 days',
+};
+
+const timePeriod = timePeriods['7d'];
+
+const socialProofLabel = `${leadCount * 6} ${
   leadCount > 1 ? 'couples' : 'couple'
-} downloaded these strategies`;
+}`;
+
+const socialProofMessage = `downloaded these strategies`;
 ---
 
 <OfferLayout title='Home'>
@@ -44,9 +54,19 @@ const socialProofMessage = `${leadCount * 6} ${
           </div>
           {
             !!leadCount && (
-              <div class='flex gap-1'>
+              <div class='flex gap-2 shadow rounded-lg px-4 py-3'>
                 <Icon class='text-error-500' icon={FlameIcon} />
-                <Text>{socialProofMessage}</Text>
+                <div class='grid gap-1'>
+                  <Text>
+                    <span class='font-medium'>{socialProofLabel}</span>{' '}
+                    <span class='text-gray-600 dark:text-gray-300'>
+                      {socialProofMessage}
+                    </span>
+                  </Text>
+                  <Text class='text-gray-600 dark:text-gray-300'>
+                    in the last {timePeriod}
+                  </Text>
+                </div>
               </div>
             )
           }
