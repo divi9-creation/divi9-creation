@@ -41,7 +41,7 @@ const socialProofLabel = `${newLeadCount} ${
   newLeadCount > 1 ? 'couples' : 'couple'
 }`;
 
-const socialProofMessage = `downloaded these strategies`;
+const socialProofMessage = `downloaded these strategies in the last ${timePeriod}`;
 ---
 
 <OfferLayout title='Home'>
@@ -63,9 +63,6 @@ const socialProofMessage = `downloaded these strategies`;
                     <span class='text-gray-600 dark:text-gray-300'>
                       {socialProofMessage}
                     </span>
-                  </Text>
-                  <Text class='text-gray-600 dark:text-gray-300'>
-                    in the last {timePeriod}
                   </Text>
                 </div>
               </div>
